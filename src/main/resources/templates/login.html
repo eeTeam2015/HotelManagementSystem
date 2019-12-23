@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/login_style.css"/>
+		<title>入家酒店-管理员登录</title>
+	</head>
+	<body>
+
+		<div class="container">
+			<div class="justify-content-center h-100 d-flex">
+				<div class="card">
+					<div class="card-header">
+						<h3>登录</h3>
+					</div>
+					<div class="card-body">
+						<form action="/login.action" method="post">
+							<div class="input-group form-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"></span>
+								</div>
+								<input type="text" class="form-control" placeholder="用户名" name="managername">
+							</div>
+							<div class="input-group form-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"></span>
+								</div>
+								<input type="password" class="form-control" placeholder="密码" name="password">
+							</div>
+							<div class="form-group">
+								<input type="submit" value="登录" class="btn float-right login_btn">
+							</div>
+						</form>
+					</div>
+					<span th:text="${msg}" style="color: red"></span>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+	</body>
+</html>

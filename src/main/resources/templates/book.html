@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/book.css"/>
+		<title>入家酒店-预订</title>
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand">入家酒店</a>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">预订 <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div id="bd">
+			<div class="card-deck">
+				<div class="card">
+					<img src="img/alone.jpg" class="card-img-top" alt="单人房">
+					<div class="card-body">
+						<h5 class="card-title">单人房</h5>
+						<p class="card-text">舒适温馨整洁的单人房间。</p>
+						<p class="card-text"><small class="text-muted"></small></p>
+					</div>
+				</div>
+				<div class="card">
+					<img src="img/bigbed.jpg" class="card-img-top" alt="大床房">
+					<div class="card-body">
+						<h5 class="card-title">大床房</h5>
+						<p class="card-text">舒适温馨整洁的大床房间。</p>
+						<p class="card-text"><small class="text-muted"></small></p>
+					</div>
+				</div>
+				<div class="card">
+					<img src="img/twobed.jpg" class="card-img-top" alt="双床房">
+					<div class="card-body">
+						<h5 class="card-title">双床房</h5>
+						<p class="card-text">舒适温馨整洁的双人房间。</p>
+						<p class="card-text"><small class="text-muted"></small></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="w-100 fixed-bottom bg-light" style="height: 12%;">
+			<div class="card">
+				<div class="card-body">
+					<form>
+						<div class="justify-content-center d-flex">
+							<label>房间类型</label>
+							<select class="custom-select w-25">
+							  <option selected>单人房</option>
+							  <option value="2">大床房</option>
+							  <option value="3">双床房</option>
+							</select>
+							<input type="submit" value="预订房间" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/room_style.css" />
+		<title>入家酒店-入住管理</title>
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand">入家酒店</a>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="/room1">房间管理</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/room2">入住<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/room3">退房</a>
+					</li>
+				</ul>
+			</div>
+			<form action="/quit" class="form-inline my-2 my-lg-0">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">退出登录</button>
+			</form>
+		</nav>
+
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">房间号</th>
+						<th scope="col">房间类型</th>
+						<th scope="col">房间状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="room : ${list}">
+						<td th:text="${room.getId()}"></td>
+						<td th:text="${room.getType()}"></td>
+						<td th:text="${room.getState()}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="w-100 fixed-bottom bg-light" style="height: 12%;">
+			<div class="card">
+				<div class="card-body">
+					<form action="/checkin.action" name="form1" method="post">
+						<div class="justify-content-around d-flex">
+							<input placeholder="房间号" name="roomid"/>
+							<input placeholder="姓名" name="guestname"/>
+							<input class="w-25" placeholder="身份证号" name="guestid"/>
+							<input placeholder="入住天数" name="days"/>
+							<input type="submit" value="入住"/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+	</body>
+</html>

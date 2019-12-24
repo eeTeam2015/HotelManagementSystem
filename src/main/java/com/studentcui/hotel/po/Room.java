@@ -1,11 +1,15 @@
 package com.studentcui.hotel.po;
 
+import java.sql.Date;
+
 public class Room {
     private int id;
     private String type;
     private String state;
     private String guestname;
-    private String getGuestid;
+    private String guestid;
+    private Date checkin;
+    private Date checkout;
 
     public int getId() {
         return id;
@@ -39,11 +43,27 @@ public class Room {
         this.guestname = guestname;
     }
 
-    public String getGetGuestid() {
-        return getGuestid;
+    public String getGuestid() {
+        return guestid;
     }
 
-    public void setGetGuestid(String getGuestid) {
-        this.getGuestid = getGuestid;
+    public void setGuestid(String guestid) {
+        this.guestid = guestid;
+    }
+
+    public Date getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(Date checkin) {
+        this.checkin = checkin;
+    }
+
+    public Date getCheckout() {
+        return checkout;
+    }
+
+    public void setCheckout(Date checkout) {
+        this.checkout = checkout;
     }
 }

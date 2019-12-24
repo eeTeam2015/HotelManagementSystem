@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class RoomServiceImpl implements RoomService {
-    @Autowired
+    @Autowired(required = false)
     private RoomMapper roomMapper;
 
     @Override
@@ -20,11 +20,35 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public boolean insertRoom(String id, String type) {
-        if(roomMapper.insertRoom(id,type))
-            return true;
-        else
-            return false;
+    public List<Room> findCheckin() {
+        List<Room> list = roomMapper.findCheckin();
+        return list;
+    }
+
+    @Override
+    public List<Room> findCheckout() {
+        List<Room> list = roomMapper.findCheckout();
+        return list;
+    }
+
+    @Override
+    public void checkin(Room room) {
+        roomMapper.checkin(room);
+    }
+
+    @Override
+    public int checkout(String id) {
+        return roomMapper.checkout(id);
+    }
+
+    @Override
+    public void insertRoom(String id, String type) {
+        roomMapper.insertRoom(id,type);
+    }
+
+    @Override
+    public int deleteRoom(String id) {
+        return roomMapper.deleteRoom(id);
     }
 
 }

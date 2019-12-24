@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.studentcui</groupId>
     <artifactId>hotel</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>hotel</name>
     <description>a hotel management system</description>
     <packaging>jar</packaging>

@@ -37,4 +37,6 @@ public interface RoomService {
     public List<OrderRoom> findAllOrder();
 
     public int delOrder(@Param("id")int id);
+
+    public int updatePrice(@Param("price")int price, @Param("name")String name);
 }

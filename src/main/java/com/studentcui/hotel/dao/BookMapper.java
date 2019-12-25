@@ -12,8 +12,8 @@ import java.util.List;
 @Mapper
 public interface BookMapper {
 
-    @Select("select count(*) from orderRoom where type = #{type}")
-    public int cntConflict(@Param("type")String type, @Param("intime")Date checkin, @Param("outtime")Date checkout);
+    @Select("select count(*) from orderRoom where type = #{type} and not((checkin > #{checkin,jdbcType=TIMESTAMP} and checkin >= #{checkout,jdbcType=TIMESTAMP}) or (checkout <= #{checkin,jdbcType=TIMESTAMP} and checkout < #{checkout,jdbcType=TIMESTAMP}))")
+    public int cntConflict(@Param("type")String type, @Param("checkin")Date checkin, @Param("checkout")Date checkout);
 
     @Select("select * from roomType")
     public List<RoomType> findAllRoomType();

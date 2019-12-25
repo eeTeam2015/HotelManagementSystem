@@ -54,4 +54,7 @@ public interface RoomMapper {
 
     @Delete("delete from orderRoom where id = #{id}")
     public int delOrder(@Param("id")int id);
+
+    @Update("update roomType set price = #{price} where name = #{name}")
+    public int updatePrice(@Param("price")int price, @Param("name")String name);
 }

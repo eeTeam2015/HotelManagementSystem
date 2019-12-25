@@ -59,6 +59,7 @@
 							<input placeholder="类型名称" name="typename"/>
 							<input placeholder="每晚价格" name="price">
 							<input type="submit" value="添加" onclick="insert()">
+							<input type="submit" value="修改" onclick="update()">
 							<input type="submit" value="删除" onclick="del()"/>
 						</div>
 					</form>
@@ -72,6 +73,10 @@
 			}
 			function del() {
 				document.form1.action="deleteType";
+				document.form1.submit();
+			}
+			function update() {
+				document.form1.action="updatePrice";
 				document.form1.submit();
 			}
 		</script>

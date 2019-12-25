@@ -42,6 +42,37 @@ INSERT INTO `manager` VALUES (1,'123','123');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `orderRoom`
+--
+
+DROP TABLE IF EXISTS `orderRoom`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orderRoom` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(20) NOT NULL,
+  `checkin` date NOT NULL,
+  `checkout` date NOT NULL,
+  `price` int(11) NOT NULL,
+  `guestname` varchar(20) NOT NULL,
+  `guestid` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_book_1_idx` (`type`),
+  CONSTRAINT `fk_book_1` FOREIGN KEY (`type`) REFERENCES `roomType` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orderRoom`
+--
+
+LOCK TABLES `orderRoom` WRITE;
+/*!40000 ALTER TABLE `orderRoom` DISABLE KEYS */;
+INSERT INTO `orderRoom` VALUES (15,'单人房','2019-12-26','2019-12-27',155,'小明','141414199909092222');
+/*!40000 ALTER TABLE `orderRoom` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `room`
 --
 
@@ -56,7 +87,9 @@ CREATE TABLE `room` (
   `guestid` varchar(20) DEFAULT NULL,
   `checkin` date DEFAULT NULL,
   `checkout` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `fk_room_1_idx` (`type`),
+  CONSTRAINT `fk_room_1` FOREIGN KEY (`type`) REFERENCES `roomType` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=233 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -66,8 +99,33 @@ CREATE TABLE `room` (
 
 LOCK TABLES `room` WRITE;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` VALUES (1,'双床房','未入住',NULL,NULL,NULL,NULL),(22,'大床房','未入住',NULL,NULL,NULL,NULL),(232,'单人房','未入住',NULL,NULL,NULL,NULL);
+INSERT INTO `room` VALUES (1,'双床房','未入住',NULL,NULL,NULL,NULL),(2,'大床房','未入住',NULL,NULL,NULL,NULL),(3,'单人房','未入住',NULL,NULL,NULL,NULL),(4,'单人房','未入住',NULL,NULL,NULL,NULL),(5,'大床房','未入住',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roomType`
+--
+
+DROP TABLE IF EXISTS `roomType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roomType` (
+  `name` varchar(20) NOT NULL,
+  `price` int(11) NOT NULL,
+  PRIMARY KEY (`name`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roomType`
+--
+
+LOCK TABLES `roomType` WRITE;
+/*!40000 ALTER TABLE `roomType` DISABLE KEYS */;
+INSERT INTO `roomType` VALUES ('单人房',88),('双床房',158),('大床房',155);
+/*!40000 ALTER TABLE `roomType` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -79,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-25  0:45:51
+-- Dump completed on 2019-12-26  4:56:24

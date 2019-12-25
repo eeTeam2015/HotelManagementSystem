@@ -93,5 +93,10 @@ public class RoomServiceImpl implements RoomService {
         return roomMapper.delOrder(id);
     }
 
+    @Override
+    public int updatePrice(int price, String name) {
+        return roomMapper.updatePrice(price,name);
+    }
+
 
 }

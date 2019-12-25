@@ -181,6 +181,34 @@ public class ManagerController {
         return "room4";
     }
 
+    //修改房间类型价格
+    @RequestMapping("/updatePrice")
+    public String updatePrice(HttpServletRequest request, HttpServletResponse response, Model model){
+        try {
+            if (roomService.updatePrice(Integer.parseInt(request.getParameter("price")),request.getParameter("typename")) == 0) {
+                response.setCharacterEncoding("utf-8");
+                response.setHeader("Content-type", "text/html;charset=UTF-8");
+                try {
+                    PrintWriter out = response.getWriter();
+                    out.print("<script>alert('删除失败！');</script>");
+                } catch (Exception e2) {
+
+                }
+            }
+        } catch (Exception e) {
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            try {
+                PrintWriter out = response.getWriter();
+                out.print("<script>alert('删除失败！');</script>");
+            } catch (Exception e2) {
+
+            }
+        }
+        model.addAttribute("list", roomService.findAllRoomType());
+        return "room4";
+    }
+
     //删除房间类型
     @RequestMapping("/deleteType")
     public String deleteType(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -205,7 +233,7 @@ public class ManagerController {
 
             }
         }
-        model.addAttribute("list", roomService.findAllRoom());
+        model.addAttribute("list", roomService.findAllRoomType());
         return "room4";
     }
 

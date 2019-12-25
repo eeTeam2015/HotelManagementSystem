@@ -101,8 +101,8 @@
     $(function(){
         $(".tj").click(function(){
             debugger
-            var checkin = $("#in").val();
-            var checkout = $("#out").val();
+            var checkin = $("#in_info").val();
+            var checkout = $("#out_info").val();
             var type = sessionStorage.getItem("type");
             var name = $("#name").val();
             var id = $("#idcard").val();
@@ -158,16 +158,38 @@
         var year = date_now.getFullYear();
         var month = date_now.getMonth()+1<10?"0"+(date_now.getMonth()+1):(date_now.getMonth()+1);
         var date = date_now.getDate() <10?"0"+date_now.getDate():date_now.getDate();
-        $("#in_info").attr("value", year+"-"+month+"-"+date);
         $("#in_info").attr("min", year+"-"+month+"-"+date);
 
         date_now.setTime(date_now.getTime()+24*60*60*1000);
         year = date_now.getFullYear();
         month = date_now.getMonth()+1<10?"0"+(date_now.getMonth()+1):(date_now.getMonth()+1);
         date = date_now.getDate() <10?"0"+date_now.getDate():date_now.getDate();
-        $("#out_info").attr("value", year+"-"+month+"-"+date);
         $("#out_info").attr("min", year+"-"+month+"-"+date);
     })
+
+    var in_info = document.getElementById('in_info');
+    in_info.onblur = function(){
+        debugger
+        var date_now = new Date($("#in_info").val());
+        date_now.setTime(date_now.getTime()+24*60*60*1000);
+        var year = date_now.getFullYear();
+        var month = date_now.getMonth()+1<10?"0"+(date_now.getMonth()+1):(date_now.getMonth()+1);
+        var date = date_now.getDate() <10?"0"+date_now.getDate():date_now.getDate();
+        $("#out_info").attr("value", year+"-"+month+"-"+date);
+        $("#out_info").attr("min", year+"-"+month+"-"+date);
+    };
+
+    var out_info = document.getElementById('out_info');
+    out_info.onblur = function(){
+        debugger
+        var date_now = new Date($("#out_info").val());
+        date_now.setTime(date_now.getTime()-24*60*60*1000);
+        var year = date_now.getFullYear();
+        var month = date_now.getMonth()+1<10?"0"+(date_now.getMonth()+1):(date_now.getMonth()+1);
+        var date = date_now.getDate() <10?"0"+date_now.getDate():date_now.getDate();
+        $("#in_info").attr("value", year+"-"+month+"-"+date);
+        $("#in_info").attr("max", year+"-"+month+"-"+date);
+    };
 </script>
 </body>
 </html>

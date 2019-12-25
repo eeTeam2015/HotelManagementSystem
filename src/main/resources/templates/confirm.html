@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/login_style.css"/>
+		<title>入家酒店-预定确认</title>
+	</head>
+	<body>
+
+		<div class="container">
+			<div class="justify-content-center h-100 d-flex">
+				<div class="card">
+					<div class="card-header">
+						<h3 id="type" th:text="${type}"></h3>
+					</div>
+					<div class="card-body">
+							<div class="input-group form-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"></span>
+								</div>
+								<input type="text" class="form-control" placeholder="姓名" name="managername" id='name'>
+							</div>
+							<div class="input-group form-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"></span>
+								</div>
+								<input type="password" class="form-control" placeholder="身份证号" name="password" id="idcard">
+							</div>
+							<div class="form-group">
+								<button value="预定" class="btn float-right login_btn" id="btn1" onclick="yuding()"></button>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script>
+			function yuding() {
+				var name = document.getElementById("name").value;
+				var id = document.getElementById("idcard").value;
+				var type = document.getElementById("type").value;
+				$.ajax({
+					url:''
+				})
+			}
+		</script>
+	</body>
+</html>

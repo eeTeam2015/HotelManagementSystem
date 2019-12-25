@@ -1,22 +1,25 @@
 package com.studentcui.hotel.controller;
 
-import com.studentcui.hotel.po.Manager;
-import com.studentcui.hotel.po.Room;
+import com.studentcui.hotel.po.*;
 import com.studentcui.hotel.service.ManagerService;
 import com.studentcui.hotel.service.RoomService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.sql.Date;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @Controller
 public class ManagerController {
@@ -37,6 +40,31 @@ public class ManagerController {
         }
         model.addAttribute("msg", "账号或密码输入错误，请重新输入！");
         return "login";
+    }
+
+
+
+    //预定界面控制器
+    @GetMapping("/book")
+    public String book() {
+        return "book";
+    }
+
+    //确认订单
+    @RequestMapping("/confirm")
+    @ResponseBody
+    public String confirm(@RequestParam int price, @RequestParam String type, @RequestParam Date checkin, @RequestParam Date checkout, @RequestParam String name, @RequestParam String id){
+        Order order = new Order();
+        order.setType(type);
+        order.setCheckin(checkin);
+        order.setCheckout(checkout);
+        order.setPrice(price);
+        order.setGuestname(name);
+        order.setGuestid(id);
+        if(roomService.insertOrder(order) > 0)
+            return "预定成功！";
+        else
+            return "预定失败！";
     }
 
     //登录界面控制器
@@ -61,9 +89,16 @@ public class ManagerController {
 
     //退房页面控制器
     @GetMapping("/room3")
-    public String room3(Model model){
+    public String room3(Model model) {
         model.addAttribute("list", roomService.findCheckout());
         return "room3";
+    }
+
+    //房间类型管理控制器
+    @GetMapping("/room4")
+    public String room4(Model model) {
+        model.addAttribute("list", roomService.findAllRoomType());
+        return "room4";
     }
 
     //添加房间
@@ -85,11 +120,58 @@ public class ManagerController {
         return "room1";
     }
 
+    //添加房间类型
+    @RequestMapping("/insertType")
+    public String insertRoomTypeaction(HttpServletRequest request, HttpServletResponse response, Model model) {
+        RoomType roomType = new RoomType();
+        roomType.setName(request.getParameter("typename"));
+        roomType.setPrice(Integer.parseInt(request.getParameter("price")));
+        try {
+            roomService.insertRoomType(roomType);
+        } catch (Exception e) {
+            try {
+                PrintWriter out = response.getWriter();
+                out.print("<script>alert('删除失败！');</script>");
+            } catch (Exception e2) {
+            }
+        }
+        model.addAttribute("list", roomService.findAllRoomType());
+        return "room4";
+    }
+
+    //删除房间类型
+    @RequestMapping("/deleteType")
+    public String deleteType(HttpServletRequest request, HttpServletResponse response, Model model) {
+        try {
+            if (roomService.deleteType(request.getParameter("typename")) == 0) {
+                response.setCharacterEncoding("utf-8");
+                response.setHeader("Content-type", "text/html;charset=UTF-8");
+                try {
+                    PrintWriter out = response.getWriter();
+                    out.print("<script>alert('删除失败！');</script>");
+                } catch (Exception e2) {
+
+                }
+            }
+        } catch (Exception e) {
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            try {
+                PrintWriter out = response.getWriter();
+                out.print("<script>alert('删除失败！');</script>");
+            } catch (Exception e2) {
+
+            }
+        }
+        model.addAttribute("list", roomService.findAllRoom());
+        return "room4";
+    }
+
     //删除房间
     @RequestMapping("/deleteRoom")
     public String deleteaction(String roomid, Model model, HttpServletResponse response) {
         try {
-            if(roomService.deleteRoom(roomid) == 0){
+            if (roomService.deleteRoom(roomid) == 0) {
                 response.setCharacterEncoding("utf-8");
                 response.setHeader("Content-type", "text/html;charset=UTF-8");
                 try {
@@ -141,15 +223,15 @@ public class ManagerController {
 
             }
         }
-        model.addAttribute("list",roomService.findCheckin());
+        model.addAttribute("list", roomService.findCheckin());
         return "room2";
     }
 
     //退房检验
     @RequestMapping("/checkout.action")
-    public String checkoutaction(String roomid, Model model, HttpServletResponse response){
+    public String checkoutaction(String roomid, Model model, HttpServletResponse response) {
         try {
-            if(roomService.checkout(roomid) == 0){
+            if (roomService.checkout(roomid) == 0) {
                 response.setCharacterEncoding("utf-8");
                 response.setHeader("Content-type", "text/html;charset=UTF-8");
                 try {
@@ -159,7 +241,7 @@ public class ManagerController {
 
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             response.setCharacterEncoding("utf-8");
             response.setHeader("Content-type", "text/html;charset=UTF-8");
             try {
@@ -169,13 +251,13 @@ public class ManagerController {
 
             }
         }
-        model.addAttribute("list",roomService.findCheckout());
+        model.addAttribute("list", roomService.findCheckout());
         return "room3";
     }
 
     //退出登录
     @RequestMapping("/quit")
-    public String quit(HttpServletRequest request){
+    public String quit(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.removeAttribute("MANAGER_SESSION");
         return "login";

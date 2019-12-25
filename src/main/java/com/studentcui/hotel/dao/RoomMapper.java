@@ -1,8 +1,11 @@
 package com.studentcui.hotel.dao;
 
+import com.studentcui.hotel.po.Order;
 import com.studentcui.hotel.po.Room;
+import com.studentcui.hotel.po.RoomType;
 import org.apache.ibatis.annotations.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @Mapper
@@ -27,4 +30,22 @@ public interface RoomMapper {
 
     @Delete("delete from room where id = #{id}")
     public int deleteRoom(@Param("id")String id);
+
+    @Select("select * from roomType")
+    public List<RoomType> findAllRoomType();
+
+    @Insert("insert into roomType values(#{name}, #{price})")
+    public int insertRoomType(RoomType roomType);
+
+    @Delete("delete from roomType where name = #{name}")
+    public int deleteType(@Param("name")String name);
+
+    @Select("select count(*) from room where type=#{type} and state = '未入住'")
+    public int countvacant(@Param("type")String type);
+
+    @Select("select count(*) from order where type=#{type} and checkin < #{checkout} and checkout > #{checkin}")
+    public int countConflict(@Param("type")String type, @Param("checkin")String checkin, @Param("checkout")String checkout);
+
+    @Insert("insert into book(type, checkin, checkout, price, guestname, guestid) values (#{type}, #{checkin}, #{checkout}, #{price}, #{guestname}, #{guestid})")
+    public int insertOrder(Order order);
 }

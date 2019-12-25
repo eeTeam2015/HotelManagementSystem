@@ -9,6 +9,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new ManagerInterceptor()).addPathPatterns("/**").excludePathPatterns("/login","/login.action","/**/*.js","/**/*.css","/**/*.jpg");
+        //registry.addInterceptor(new ManagerInterceptor()).addPathPatterns("/**").excludePathPatterns("/book","/login","/login.action","/**/*.js","/**/*.css","/**/*.jpg");
+        registry.addInterceptor(new ManagerInterceptor()).addPathPatterns("/room1","room2","room3","room4");
     }
 }

@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="css/room_style.css" />
-		<title>入家酒店-房间管理</title>
+		<title>入家酒店-房间类型管理</title>
 	</head>
 	<body>
 
@@ -12,8 +12,8 @@
 			<a class="navbar-brand">入家酒店</a>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="/room1">房间管理 <span class="sr-only">(current)</span></a>
+					<li class="nav-item">
+						<a class="nav-link" href="/room1">房间管理</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/room2">入住</a>
@@ -21,8 +21,8 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/room3">退房</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/room4">房间类型</a>
+					<li class="nav-item active">
+						<a class="nav-link" href="/room4">房间类型<span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 			</div>
@@ -34,26 +34,16 @@
 		<div>
 			<table class="table">
 				<thead>
-					<tr>
-						<th scope="col">房间号</th>
-						<th scope="col">房间类型</th>
-						<th scope="col">房间状态</th>
-						<th scope="col">入住人姓名</th>
-						<th scope="col">入住人身份证号</th>
-						<th scope="col">入住时间</th>
-						<th scope="col">退房时间</th>
-					</tr>
+				<tr>
+					<th scope="col">房间类型</th>
+					<th scope="col">房间价格(每天)</th>
+				</tr>
 				</thead>
 				<tbody>
-					<tr th:each="room : ${list}">
-						<td th:text="${room.getId()}"></td>
-						<td th:text="${room.getType()}"></td>
-						<td th:text="${room.getState()}"></td>
-						<td th:text="${room.getGuestname()}"></td>
-						<td th:text="${room.getGuestid()}"></td>
-						<td th:text="${#dates.format(room.getCheckin(),'yyyy-MM-dd')}"></td>
-						<td th:text="${#dates.format(room.getCheckout(),'yyyy-MM-dd')} "></td>
-					</tr>
+				<tr th:each="type : ${list}">
+					<td th:text="${type.getName()}"></td>
+					<td th:text="${type.getPrice()}"></td>
+				</tr>
 				</tbody>
 			</table>
 		</div>
@@ -63,23 +53,22 @@
 				<div class="card-body">
 					<form name="form1" method="post">
 						<div class="justify-content-around d-flex">
-							<input placeholder="房间号" name="roomid"/>
-							<input placeholder="房间类型" name="roomtype"/>
-							<input type="submit" value="添加房间" onclick="insert()"/>
-							<input type="submit" value="删除房间" onclick="del()"/>
+							<input placeholder="类型名称" name="typename"/>
+							<input placeholder="每晚价格" name="price">
+							<input type="submit" value="添加" onclick="insert()">
+							<input type="submit" value="删除" onclick="del()"/>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-
 		<script>
 			function insert() {
-				document.form1.action="insertRoom";
+				document.form1.action="insertType";
 				document.form1.submit();
 			}
 			function del() {
-				document.form1.action="deleteRoom";
+				document.form1.action="deleteType";
 				document.form1.submit();
 			}
 		</script>

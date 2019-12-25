@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--    <link rel="stylesheet" type="text/css" href="css/book.css"/>-->
+    <title>入家酒店</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+</head>
+<body class="modal-open">
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-title" align="center">确认订单</h4>
+                <br/>
+                <table align="center">
+                    <tr>
+                        <td>姓名：</td>
+                        <td><input type="text" id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>身份证号：</td>
+                        <td><input type="text" id="idcard"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button class="tj">提交</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">入家酒店</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">预订 <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">房间类型</th>
+            <th scope="col">总价格</th>
+            <th scope="col">剩余间数</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="type : ${list}">
+
+            <td th:text="${type.getName()}"></td>
+            <td th:text="${type.getSumprice()}"><input id=”pricesum” th:value=”${type.getSumprice()}” hidden></td>
+            <td th:text="${type.getNumber()}"></td>
+            <td>
+                <button class="tbox">预定</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="w-100 fixed-bottom bg-light" style="height: 12%;">
+    <div class="card">
+        <div class="card-body">
+            <form>
+                <div class="justify-content-around d-flex">
+                    <div>
+                        入住时间：
+                        <input type="date" name="checkin" th:value="${checkin}" id="in">
+                    </div>
+                    <div>
+                        退房时间：
+                        <input type="date" name="checkout" th:value="${checkout}" id="out">
+                    </div>
+                    <input type="submit" value="查询">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $(".tj").click(function(){
+            debugger
+            var checkin = $("#in").val();
+            var checkout = $("#out").val();
+            var type = sessionStorage.getItem("type");
+            var price = $("#pricesum").val();
+            var name = $("#name").val();
+            var id = $("#idcard").val();
+            $.ajax({
+                type:"POST",
+                url:"/confirm",
+                data:{
+                    checkin:checkin,
+                    checkout:checkout,
+                    type:type,
+                    name:name,
+                    id:id
+                },
+                success:function(data){
+                    alert(data)
+                },
+                error:function(){
+                    console.log("error");
+                }
+            })
+
+        })
+
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $(".tbox").click(function () {
+            var type = $.trim($(this).parent().prev().prev().prev().text());
+            console.log(type);
+            sessionStorage.setItem("type", type);
+            $('#myModal').modal('show') //显示模态框
+        })
+
+    });
+</script>
+</body>
+</html>

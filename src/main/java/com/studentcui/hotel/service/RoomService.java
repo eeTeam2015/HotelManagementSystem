@@ -30,7 +30,11 @@ public interface RoomService {
 
     public int countvacant(@Param("type")String type);
 
-    public int countConflict(String type,String checkin,String checkout);
+//    public int countConflict(String type,String checkin,String checkout);
 
     public int insertOrder(OrderRoom orderRoom);
+
+    public List<OrderRoom> findAllOrder();
+
+    public int delOrder(@Param("id")int id);
 }

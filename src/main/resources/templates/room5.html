@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="css/room_style.css" />
-		<title>入家酒店-退房管理</title>
+		<title>入家酒店-预定管理</title>
 	</head>
 	<body>
 
@@ -18,14 +18,14 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/room2">入住</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="/room3">退房<span class="sr-only">(current)</span></a>
+					<li class="nav-item">
+						<a class="nav-link" href="/room3">退房</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/room4">房间类型</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/room5">预定管理</a>
+					<li class="nav-item active">
+						<a class="nav-link" href="/room4">预定管理<span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 			</div>
@@ -38,24 +38,24 @@
 			<table class="table">
 				<thead>
 				<tr>
-					<th scope="col">房间号</th>
+					<th scope="col">订单号</th>
 					<th scope="col">房间类型</th>
-					<th scope="col">房间状态</th>
-					<th scope="col">入住人姓名</th>
-					<th scope="col">入住人身份证号</th>
 					<th scope="col">入住时间</th>
 					<th scope="col">退房时间</th>
+					<th scope="col">总价</th>
+					<th scope="col">客人姓名</th>
+					<th scope="col">客人身份证号</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr th:each="room : ${list}">
-					<td th:text="${room.getId()}"></td>
-					<td th:text="${room.getType()}"></td>
-					<td th:text="${room.getState()}"></td>
-					<td th:text="${room.getGuestname()}"></td>
-					<td th:text="${room.getGuestid()}"></td>
-					<td th:text="${#dates.format(room.getCheckin(),'yyyy-MM-dd')}"></td>
-					<td th:text="${#dates.format(room.getCheckout(),'yyyy-MM-dd')} "></td>
+				<tr th:each="od : ${list}">
+					<td th:text="${od.getId()}"></td>
+					<td th:text="${od.getType()}"></td>
+					<td th:text="${#dates.format(od.getCheckin(),'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(od.getCheckout(),'yyyy-MM-dd')}"></td>
+					<td th:text="${od.getPrice()}"></td>
+					<td th:text="${od.getGuestname()}"></td>
+					<td th:text="${od.getGuestid()}"></td>
 				</tr>
 				</tbody>
 			</table>
@@ -64,15 +64,16 @@
 		<div class="w-100 fixed-bottom bg-light" style="height: 12%;">
 			<div class="card">
 				<div class="card-body">
-					<form action="/checkout.action" name="form1" method="post">
+					<form action="delOrder" name="form1" method="post">
 						<div class="justify-content-around d-flex">
-							<input placeholder="房间号" name="roomid"/>
-							<input type="submit" value="退房"/>
+							<input type="text" name="orderid">
+							<input type="submit" value="删除"/>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
+
 		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 		<script src="js/bootstrap.js"></script>

@@ -42,10 +42,16 @@ public interface RoomMapper {
     @Select("select count(*) from room where type=#{type} and state = '未入住'")
     public int countvacant(@Param("type")String type);
 
-    @Select("select count(*) from order where type=#{type} and checkin < #{checkout} and checkout > #{checkin}")
-    public int countConflict(@Param("type")String type, @Param("checkin")String checkin, @Param("checkout")String checkout);
+//    @Select("select count(*) from order where type=#{type} and checkin < #{checkout} and checkout > #{checkin}")
+//    public int countConflict(@Param("type")String type, @Param("checkin")String checkin, @Param("checkout")String checkout);
 
     @Insert("insert into orderRoom(type, checkin, checkout, price, guestname, guestid) values (#{type}, #{checkin}, #{checkout}, #{price}, #{guestname}, #{guestid})")
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     public int insertOrder(OrderRoom orderRoom);
+
+    @Select("select * from orderRoom")
+    public List<OrderRoom> findAllOrder();
+
+    @Delete("delete from orderRoom where id = #{id}")
+    public int delOrder(@Param("id")int id);
 }

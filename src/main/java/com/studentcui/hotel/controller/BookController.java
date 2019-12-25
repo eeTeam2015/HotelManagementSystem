@@ -7,7 +7,9 @@ import com.studentcui.hotel.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +46,7 @@ public class BookController {
                     long diff = checkout.getTime() - checkin.getTime();//这样得到的差值是微秒级别
                     long days = diff / (1000 * 60 * 60 * 24);
                     book.setSumprice((int) days*type.getPrice());
+                    request.getSession().setAttribute("SUMPRICE",(int) days*type.getPrice());
                     books.add(book);
                 }catch (Exception e)
                 {
@@ -55,4 +58,5 @@ public class BookController {
         model.addAttribute("checkout", checkout);
         return "bookQuery";
     }
+
 }

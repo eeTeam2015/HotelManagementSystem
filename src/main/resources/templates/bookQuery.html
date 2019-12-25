@@ -67,7 +67,7 @@
         <tr th:each="type : ${list}">
 
             <td th:text="${type.getName()}"></td>
-            <td th:text="${type.getSumprice()}"><input id=”pricesum” th:value=”${type.getSumprice()}” hidden></td>
+            <td th:text="${type.getSumprice()}"></td>
             <td th:text="${type.getNumber()}"></td>
             <td>
                 <button class="tbox">预定</button>
@@ -80,7 +80,7 @@
 <div class="w-100 fixed-bottom bg-light" style="height: 12%;">
     <div class="card">
         <div class="card-body">
-            <form>
+            <form action="query.action" method="post">
                 <div class="justify-content-around d-flex">
                     <div>
                         入住时间：
@@ -104,25 +104,34 @@
             var checkin = $("#in").val();
             var checkout = $("#out").val();
             var type = sessionStorage.getItem("type");
-            var price = $("#pricesum").val();
             var name = $("#name").val();
             var id = $("#idcard").val();
             $.ajax({
                 type:"POST",
                 url:"/confirm",
+                xhrFields: {withCredentials: true},
                 data:{
                     checkin:checkin,
                     checkout:checkout,
                     type:type,
                     name:name,
-                    id:id,
-                    price:22
+                    id:id
                 },
                 success:function(data){
-                    alert(data)
+                    alert(data);
+                    var biaodan = document.createElement('form');
+                    biaodan.method='get';
+                    biaodan.action='book';
+                    document.body.appendChild(biaodan);
+                    biaodan.submit();
                 },
                 error:function(){
                     console.log("error");
+                    var biaodan = document.createElement('form');
+                    biaodan.method='get';
+                    biaodan.action='book';
+                    document.body.appendChild(biaodan);
+                    biaodan.submit();
                 }
             })
 

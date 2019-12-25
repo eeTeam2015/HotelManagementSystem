@@ -48,7 +48,7 @@ public class ManagerController {
     //确认订单
     @RequestMapping("/confirm")
     @ResponseBody
-    public String confirm(@RequestParam int price, @RequestParam String type, @RequestParam String checkin, @RequestParam String checkout, @RequestParam String name, @RequestParam String id){
+    public String confirm(@RequestParam String type, @RequestParam String checkin, @RequestParam String checkout, @RequestParam String name, @RequestParam String id, HttpServletRequest request){
         OrderRoom orderRoom = new OrderRoom();
         orderRoom.setType(type);
 
@@ -59,7 +59,7 @@ public class ManagerController {
             orderRoom.setId(0);
             orderRoom.setCheckin(in);
             orderRoom.setCheckout(out);
-            orderRoom.setPrice(price);
+            orderRoom.setPrice((int)request.getSession().getAttribute("SUMPRICE"));
             orderRoom.setGuestname(name);
             orderRoom.setGuestid(id);
         }catch (Exception e){
@@ -103,6 +103,44 @@ public class ManagerController {
     public String room4(Model model) {
         model.addAttribute("list", roomService.findAllRoomType());
         return "room4";
+    }
+
+    //预定管理控制器
+    @GetMapping("/room5")
+    public String room5(Model model) {
+        model.addAttribute("list", roomService.findAllOrder());
+        return "room5";
+    }
+
+    //删除预定订单
+    @RequestMapping("/delOrder")
+    public String delOrder(String orderid, HttpServletRequest request, HttpServletResponse response, Model model){
+        int id = Integer.parseInt(orderid);
+        try{
+            if(roomService.delOrder(id) > 0){
+
+            }else{
+                response.setCharacterEncoding("utf-8");
+                response.setHeader("Content-type", "text/html;charset=UTF-8");
+                try {
+                    PrintWriter out = response.getWriter();
+                    out.print("<script>alert('删除失败！');</script>");
+                } catch (Exception e2) {
+
+                }
+            }
+        }catch (Exception e){
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            try {
+                PrintWriter out = response.getWriter();
+                out.print("<script>alert('删除失败！');</script>");
+            } catch (Exception e2) {
+
+            }
+        }
+        model.addAttribute("list", roomService.findAllOrder());
+        return "room5";
     }
 
     //添加房间

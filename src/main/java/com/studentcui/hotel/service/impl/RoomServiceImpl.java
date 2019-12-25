@@ -73,14 +73,24 @@ public class RoomServiceImpl implements RoomService {
         return roomMapper.countvacant(type);
     }
 
-    @Override
-    public int countConflict(String type, String checkin, String checkout) {
-        return roomMapper.countConflict(type, checkin, checkout);
-    }
+//    @Override
+//    public int countConflict(String type, String checkin, String checkout) {
+//        return roomMapper.countConflict(type, checkin, checkout);
+//    }
 
     @Override
     public int insertOrder(OrderRoom orderRoom) {
         return roomMapper.insertOrder(orderRoom);
+    }
+
+    @Override
+    public List<OrderRoom> findAllOrder() {
+        return roomMapper.findAllOrder();
+    }
+
+    @Override
+    public int delOrder(int id) {
+        return roomMapper.delOrder(id);
     }
 
 

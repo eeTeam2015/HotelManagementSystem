@@ -84,11 +84,11 @@
                 <div class="justify-content-around d-flex">
                     <div>
                         入住时间：
-                        <input type="date" name="checkin" th:value="${checkin}" id="in">
+                        <input type="date" name="checkin" th:value="${checkin}" id="in_info">
                     </div>
                     <div>
                         退房时间：
-                        <input type="date" name="checkout" th:value="${checkout}" id="out">
+                        <input type="date" name="checkout" th:value="${checkout}" id="out_info">
                     </div>
                     <input type="submit" value="查询">
                 </div>
@@ -150,6 +150,24 @@
         })
 
     });
+</script>
+
+<script>
+    $(function () {
+        var date_now = new Date();
+        var year = date_now.getFullYear();
+        var month = date_now.getMonth()+1<10?"0"+(date_now.getMonth()+1):(date_now.getMonth()+1);
+        var date = date_now.getDate() <10?"0"+date_now.getDate():date_now.getDate();
+        $("#in_info").attr("value", year+"-"+month+"-"+date);
+        $("#in_info").attr("min", year+"-"+month+"-"+date);
+
+        date_now.setTime(date_now.getTime()+24*60*60*1000);
+        year = date_now.getFullYear();
+        month = date_now.getMonth()+1<10?"0"+(date_now.getMonth()+1):(date_now.getMonth()+1);
+        date = date_now.getDate() <10?"0"+date_now.getDate():date_now.getDate();
+        $("#out_info").attr("value", year+"-"+month+"-"+date);
+        $("#out_info").attr("min", year+"-"+month+"-"+date);
+    })
 </script>
 </body>
 </html>

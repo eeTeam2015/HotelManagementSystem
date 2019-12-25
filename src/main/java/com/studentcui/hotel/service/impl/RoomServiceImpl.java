@@ -1,14 +1,13 @@
 package com.studentcui.hotel.service.impl;
 
 import com.studentcui.hotel.dao.RoomMapper;
-import com.studentcui.hotel.po.Order;
+import com.studentcui.hotel.po.OrderRoom;
 import com.studentcui.hotel.po.Room;
 import com.studentcui.hotel.po.RoomType;
 import com.studentcui.hotel.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -80,8 +79,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int insertOrder(Order order) {
-        return insertOrder(order);
+    public int insertOrder(OrderRoom orderRoom) {
+        return roomMapper.insertOrder(orderRoom);
     }
 
 

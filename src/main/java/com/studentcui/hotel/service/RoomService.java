@@ -1,11 +1,10 @@
 package com.studentcui.hotel.service;
 
-import com.studentcui.hotel.po.Order;
+import com.studentcui.hotel.po.OrderRoom;
 import com.studentcui.hotel.po.Room;
 import com.studentcui.hotel.po.RoomType;
 import org.apache.ibatis.annotations.Param;
 
-import java.sql.Date;
 import java.util.List;
 
 public interface RoomService {
@@ -33,5 +32,5 @@ public interface RoomService {
 
     public int countConflict(String type,String checkin,String checkout);
 
-    public int insertOrder(Order order);
+    public int insertOrder(OrderRoom orderRoom);
 }

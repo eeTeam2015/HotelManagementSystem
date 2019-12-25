@@ -2,7 +2,7 @@ package com.studentcui.hotel.po;
 
 import java.util.Date;
 
-public class Order {
+public class OrderRoom {
     private int id;
     private String guestname;
     private String guestid;

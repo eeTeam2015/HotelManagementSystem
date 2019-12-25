@@ -3,23 +3,18 @@ package com.studentcui.hotel.controller;
 import com.studentcui.hotel.po.*;
 import com.studentcui.hotel.service.ManagerService;
 import com.studentcui.hotel.service.RoomService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.text.DateFormat;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 @Controller
 public class ManagerController {
@@ -53,15 +48,24 @@ public class ManagerController {
     //确认订单
     @RequestMapping("/confirm")
     @ResponseBody
-    public String confirm(@RequestParam int price, @RequestParam String type, @RequestParam Date checkin, @RequestParam Date checkout, @RequestParam String name, @RequestParam String id){
-        Order order = new Order();
-        order.setType(type);
-        order.setCheckin(checkin);
-        order.setCheckout(checkout);
-        order.setPrice(price);
-        order.setGuestname(name);
-        order.setGuestid(id);
-        if(roomService.insertOrder(order) > 0)
+    public String confirm(@RequestParam int price, @RequestParam String type, @RequestParam String checkin, @RequestParam String checkout, @RequestParam String name, @RequestParam String id){
+        OrderRoom orderRoom = new OrderRoom();
+        orderRoom.setType(type);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date in = Date.valueOf(checkin);
+            Date out = Date.valueOf(checkout);
+            orderRoom.setId(0);
+            orderRoom.setCheckin(in);
+            orderRoom.setCheckout(out);
+            orderRoom.setPrice(price);
+            orderRoom.setGuestname(name);
+            orderRoom.setGuestid(id);
+        }catch (Exception e){
+
+        }
+        if(roomService.insertOrder(orderRoom) > 0)
             return "预定成功！";
         else
             return "预定失败！";

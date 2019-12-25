@@ -1,11 +1,10 @@
 package com.studentcui.hotel.dao;
 
-import com.studentcui.hotel.po.Order;
+import com.studentcui.hotel.po.OrderRoom;
 import com.studentcui.hotel.po.Room;
 import com.studentcui.hotel.po.RoomType;
 import org.apache.ibatis.annotations.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @Mapper
@@ -46,6 +45,7 @@ public interface RoomMapper {
     @Select("select count(*) from order where type=#{type} and checkin < #{checkout} and checkout > #{checkin}")
     public int countConflict(@Param("type")String type, @Param("checkin")String checkin, @Param("checkout")String checkout);
 
-    @Insert("insert into book(type, checkin, checkout, price, guestname, guestid) values (#{type}, #{checkin}, #{checkout}, #{price}, #{guestname}, #{guestid})")
-    public int insertOrder(Order order);
+    @Insert("insert into orderRoom(type, checkin, checkout, price, guestname, guestid) values (#{type}, #{checkin}, #{checkout}, #{price}, #{guestname}, #{guestid})")
+    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
+    public int insertOrder(OrderRoom orderRoom);
 }
